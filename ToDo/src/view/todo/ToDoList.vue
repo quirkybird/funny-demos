@@ -7,7 +7,7 @@
         type="text"
         v-model="inputValue"
         placeholder="Enter what you want to do"
-        maxlength="20"
+        maxlength="40"
         ref="inputBox"
       />
       <div class="add" @click="addToDo">Add</div>
@@ -19,6 +19,7 @@
       <div class="list-item">
         <div :class="{ done: item.done }" @click="doneClick(index)">
           <span>{{ item.value }}</span>
+          <span class="add-date">{{ item.date }}</span>
         </div>
         <div class="remove-btn" @click="removeToDo(index)">remove</div>
       </div>
@@ -32,9 +33,9 @@
   const inputBox = ref(null);
   const toDoList = reactive({
     data: [
-      { value: "洗衣服", done: false },
-      { value: "学英语", done: false },
-      { value: "吃饭", done: false },
+      { value: "洗衣服", done: false, date: "2023/6/22"},
+      { value: "学英语", done: false, date: "2023/6/22"},
+      { value: "吃饭", done: false, date:"2023/6/22" },
     ],
   });
   const data = JSON.parse(localStorage.getItem("data"));
@@ -43,7 +44,7 @@
   }
   function addToDo() {
     if(inputValue.value) {
-      toDoList.data.unshift({ value: inputValue.value, done: false });
+      toDoList.data.unshift({ value: inputValue.value, done: false ,date: getAddTime()});
       localStorage.setItem("data", JSON.stringify(toDoList.data));
       inputValue.value = undefined;
     }
@@ -63,6 +64,15 @@
       }
     });
   });
+
+  // 获取添加todo的时间
+  function getAddTime() {
+    const nowDateStr = new Date()
+    const year = nowDateStr.getFullYear()
+    const month = nowDateStr.getMonth() + 1
+    const day = nowDateStr.getDate()
+    return `—${year}/${month}/${day}`
+  }
 </script>
 
 <style scoped>
@@ -80,7 +90,7 @@
     border-radius: 4px;
     background-color: rgb(23, 129, 181);
     /* padding: 0 4vw; */
-    width: 8vw;
+    width: 15vw;
     height: 3rem;
     text-align: center;
     line-height: 3rem;
@@ -95,7 +105,7 @@
     border: 1px solid #fff;
     outline: 0;
     height: 3rem;
-    width: 40vw;
+    width: 60vw;
     font-size: 1.5rem;
     border: 1px solid rgb(23, 129, 181);
   }
@@ -106,7 +116,6 @@
   /* ------------- */
   .list-bar {
     height: 40vh;
-    width: 49.5vw;
     background-color: #fff8dc;
     margin-top: 50px;
     border-radius: 10px;
@@ -118,6 +127,10 @@
     padding: 10px 6vw;
     padding-left: 0;
     border-bottom: 1px solid grey;
+  }
+  .add-date {
+    display: inline-block;
+    padding: 0 2rem;
   }
   .remove-btn {
     color: #fff;
