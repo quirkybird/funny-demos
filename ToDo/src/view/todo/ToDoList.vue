@@ -39,7 +39,7 @@
     ],
   });
   const data = JSON.parse(localStorage.getItem("data"));
-  if (data != []) {
+  if (data !== null) {
     toDoList.data = data;
   }
   function addToDo() {
