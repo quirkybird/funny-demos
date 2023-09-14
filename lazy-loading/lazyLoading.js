@@ -13,25 +13,20 @@
 let imgList = [...document.querySelectorAll("img")];
 let length = imgList.length;
 
-const imgLazyLoad = (function () {
-  let count = 0;
-
-  return function () {
-    let deleteIndexList = [];
-    imgList.forEach((img, index) => {
-      let rect = img.getBoundingClientRect();
-      if (rect.top < window.innerHeight) {
-        img.src = img.dataset.src;
-        deleteIndexList.push(index);
-        count++;
-        //滚动到底部后，移除滚动监听
-        if (count === length) {
-          document.removeEventListener("scroll", imgLazyLoad);
-        }
-      }
-    });
-    imgList = imgList.filter((img, index) => !deleteIndexList.includes(index));
-  };
-})();
+const imgLazyLoad = function () {
+  let deleteIndexList = [];
+  imgList.forEach((img, index) => {
+    let rect = img.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      img.src = img.dataset.src;
+      deleteIndexList.push(index);
+    }
+  });
+  imgList = imgList.filter((img, index) => !deleteIndexList.includes(index));
+  //滚动到底部后，移除滚动监听
+  if (imgList.length === 0) {
+    document.removeEventListener("scroll", imgLazyLoad);
+  }
+};
 
 document.addEventListener("scroll", imgLazyLoad);
