@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CSSAAA TEST DEMO</title>
+<style type="text/css">
+#snow {
+ margin:160px;position:relative;
+ width:200px;height:20px;
+ border-radius:25px;
+ background-color:#09f;
+}
+.flake {
+ position:absolute;left:0;right:0;top:0;bottom:0;margin:auto;
+ width:35px;height:10px;border-radius:10px;
+}
+#snow:before, #snow:after, .flake:before, .flake:after {
+ content:" ";position:absolute;
+ width:inherit;height:inherit;
+ border-radius:inherit;
+ background-color:inherit;
+}
+#snow:before, .flake:before {
+ transform:rotate(-60deg);
+}
+#snow:after, .flake:after {
+ transform:rotate(60deg);
+}
+.flake, .flake:before, .flake:after {
+ box-shadow:45px 50px 0 2px #09f,-45px -50px 0 2px #09f,
+   45px -50px 0 2px #09f,-45px 50px 0 2px #09f;
+}
+</style>
+<script src="https://cdn.bootcss.com/prefixfree/1.0.7/prefixfree.min.js"></script>
+</head>
+<body>
+<div id="snow">
+ <div class="flake"></div>
+</div>
+</body>
+</html>
