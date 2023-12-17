@@ -11,7 +11,6 @@
 //   });
 
 let imgList = [...document.querySelectorAll("img")];
-let length = imgList.length;
 
 const imgLazyLoad = function () {
   let deleteIndexList = [];
